@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Colours and fonts come from src/design/tokens.ts through Tailwind's theme() function. */
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --nav-h: theme("spacing.nav");
+  }
+
+  html {
+    background: theme("colors.space.950");
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip; /* decorative glows and rings must never cause sideways scrolling */
+  }
+
+  /* No background on body: the page colour lives on <html> so the fixed starfield (z-index −10)
+     is painted above it instead of being covered by the body's background. */
+  body {
+    @apply font-sans text-ink antialiased;
+    min-height: 100vh;
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight text-ink;
+  }
+
+  ::selection {
+    background: rgba(79, 209, 255, 0.3);
+    color: theme("colors.ink.DEFAULT");
+  }
+
+  /* Themed focus ring for every keyboard-focusable element */
+  :focus-visible {
+    outline: 2px solid theme("colors.cyan.DEFAULT");
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* Number inputs: hide spinners, the values span many orders of magnitude */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Content column with the 16px phone gutter */
+  .container-page {
+    @apply mx-auto w-full max-w-content px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Glass panel: blur, hairline border, faint top highlight. Use for primary panels only. */
+  .glass {
+    @apply rounded-lg border border-line bg-space-900/55 shadow-glass backdrop-blur-xl;
+  }
+  .glass-hover {
+    @apply transition-[box-shadow,border-color] duration-300 hover:border-line-strong hover:shadow-innerGlow;
+  }
+
+  /* Small mono "telemetry" label */
+  .eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-[0.22em] text-cyan-soft;
+  }
+
+  .field-input {
+    @apply w-full rounded-md border border-line bg-space-800/70 px-3 py-2.5 font-mono text-sm text-ink
+      placeholder:text-ink-faint transition-colors focus:border-cyan focus:outline-none focus-visible:outline-none
+      focus:ring-2 focus:ring-cyan/40;
+  }
+
+  .link-underline {
+    @apply underline decoration-cyan/40 underline-offset-4 transition-colors hover:decoration-cyan;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  /* Subtle nebula wash behind everything */
+  .nebula-bg {
+    background:
+      radial-gradient(60% 50% at 15% 10%, rgba(43, 47, 122, 0.35), transparent 70%),
+      radial-gradient(45% 40% at 85% 25%, rgba(74, 42, 110, 0.28), transparent 70%),
+      radial-gradient(55% 45% at 60% 95%, rgba(14, 74, 85, 0.30), transparent 70%);
+  }
+}

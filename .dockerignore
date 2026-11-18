@@ -1,0 +1,21 @@
+# Whitelist: the project folder holds gigabytes (.venv, notebooks, decks, archives) that the image must not contain.
+*
+
+!Dockerfile
+!requirements-deploy.txt
+!exovet_features.py
+!api/server.py
+
+!models/exovet_network_preparation.joblib
+!models/exovet_network_weights.npz
+!models/final/exovet_final_model.joblib
+
+!data/processed/train.csv
+!data/processed/test.csv
+!data/final/train.csv
+!data/final/test.csv
+
+# The web source is built inside the image, so the host's node_modules and dist stay out
+!web
+web/node_modules
+web/dist

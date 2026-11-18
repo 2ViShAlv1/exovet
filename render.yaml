@@ -1,0 +1,9 @@
+# Render Blueprint: builds the Dockerfile and runs it as a free web service.
+services:
+  - type: web
+    name: exovet
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true
